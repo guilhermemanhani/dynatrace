@@ -10,11 +10,12 @@ class RemoteGetHero implements GetHero {
 
   RemoteGetHero({required this.httpClient, required this.url});
 
+  @override
   Future<HeroEntity> getHero() async {
     try {
       final httpResponse = await httpClient.request(
         url: url,
-        method: 'post',
+        method: 'get',
       );
       return RemoteHeroModel.fromJson(httpResponse).toEntity();
     } on HttpError catch (error) {

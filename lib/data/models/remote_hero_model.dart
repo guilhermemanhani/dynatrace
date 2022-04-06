@@ -25,5 +25,5 @@ class RemoteHeroModel {
     );
   }
 
-  HeroEntity toEntity() => HeroEntity(id, name, slug);
+  HeroEntity toEntity() => HeroEntity(id: id, name: name, slug: slug);
 }
