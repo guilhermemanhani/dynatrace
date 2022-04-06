@@ -1,1 +1,2 @@
-String makeApiUrl(String path) => 'http://fordevs.herokuapp.com/api/$path';
+String makeApiUrl(String path) =>
+    'https://akabab.github.io/superhero-api/api/$path';

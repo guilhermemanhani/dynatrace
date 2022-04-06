@@ -1,11 +1,11 @@
-import 'package:dynatrace_test/domain/helpers/helpers.dart';
-import 'package:dynatrace_test/domain/usecases/usecases.dart';
-import 'package:dynatrace_test/ui/pages/home/home.dart';
+import '../../domain/helpers/helpers.dart';
+import '../../domain/usecases/usecases.dart';
+import '../../ui/pages/home/home.dart';
 import 'package:get/get.dart';
 
 class GetxHomePresenter extends GetxController implements HomePresenter {
   final _heros = Rx<List<HeroViewModel>>([]);
-  var _isLoading = false.obs;
+  final _isLoading = true.obs;
   final GetHero loadHero;
 
   GetxHomePresenter({required this.loadHero});
@@ -15,6 +15,7 @@ class GetxHomePresenter extends GetxController implements HomePresenter {
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
 
+  @override
   Future<void> loadData() async {
     try {
       _isLoading.value = true;
