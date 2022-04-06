@@ -11,13 +11,15 @@ class RemoteGetHero implements GetHero {
   RemoteGetHero({required this.httpClient, required this.url});
 
   @override
-  Future<HeroEntity> getHero() async {
+  Future<List<HeroEntity>> getHero() async {
     try {
       final httpResponse = await httpClient.request(
         url: url,
         method: 'get',
       );
-      return RemoteHeroModel.fromJson(httpResponse).toEntity();
+      return httpResponse
+          .map<HeroEntity>((json) => RemoteHeroModel.fromJson(json).toEntity())
+          .toList();
     } on HttpError catch (error) {
       throw error == HttpError.unauthorized
           ? DomainError.invalidCredentials

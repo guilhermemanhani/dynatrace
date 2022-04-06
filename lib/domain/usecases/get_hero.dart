@@ -1,5 +1,5 @@
 import '../../domain/entities/entities.dart';
 
 abstract class GetHero {
-  Future<HeroEntity> getHero();
+  Future<List<HeroEntity>> getHero();
 }
