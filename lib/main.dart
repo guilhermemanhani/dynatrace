@@ -1,5 +1,5 @@
 import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
-import 'package:dynatrace_test/home/factories/pages/home/home_page_factory.dart';
+import '../../../../main/factories/pages/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 // As configurações de privacidade configuradas abaixo são fornecidas apenas
