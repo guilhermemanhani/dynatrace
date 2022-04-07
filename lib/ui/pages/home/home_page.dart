@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   final HomePresenter presenter;
-  HomePage(this.presenter);
+  const HomePage({Key? key, required this.presenter}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,16 +27,25 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Builder(builder: (context) {
         widget.presenter.isLoadingStream.listen((isLoading) {
-          isLoading ? showLoading(context) : hideLoading(context);
+          CircularProgressIndicator();
+          // isLoading ? showLoading(context) : hideLoading(context);
         });
-        widget.presenter.mainErrorStream.listen((error) {
-          if (error != null && error.isNotEmpty) {
-            showErrorMessage(context, error);
-          }
-        });
+        // widget.presenter.mainErrorStream.listen(
+        //   (error) {
+        //     if (error != null && error.isNotEmpty) {
+        //       showErrorMessage(context, error);
+        //     }
+        //   },
+        // );
+        // widget.presenter.loadData();
         return StreamBuilder<List<HeroViewModel>>(
             stream: widget.presenter.heroesStream,
             builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return ReloadScreen(
+                    error: '${snapshot.error}',
+                    reload: widget.presenter.loadData);
+              }
               if (snapshot.hasData) {
                 return ListenableProvider(
                     create: (_) => widget.presenter,
@@ -52,10 +61,8 @@ class _HomePageState extends State<HomePage> {
                         return Text(hero.name);
                       },
                     ));
-              } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
               }
-              return SizedBox(height: 0);
+              return const SizedBox(height: 0);
             });
       }),
     );
