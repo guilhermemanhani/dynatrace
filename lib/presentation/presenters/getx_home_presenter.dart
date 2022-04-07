@@ -30,6 +30,7 @@ class GetxHomePresenter extends GetxController implements HomePresenter {
                 id: hero.id,
                 name: hero.name,
                 slug: hero.slug,
+                images: hero.image,
               ))
           .toList();
     } on DomainError catch (error) {
