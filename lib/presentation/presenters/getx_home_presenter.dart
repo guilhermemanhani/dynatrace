@@ -7,13 +7,18 @@ class GetxHomePresenter extends GetxController implements HomePresenter {
   final _heros = Rx<List<HeroViewModel>>([]);
   final _isLoading = true.obs;
   final GetHero loadHero;
+  final _mainError = RxnString();
 
   GetxHomePresenter({required this.loadHero});
+
   @override
   Stream<List<HeroViewModel>> get heroesStream => _heros.stream;
 
   @override
   Stream<bool> get isLoadingStream => _isLoading.stream;
+
+  @override
+  Stream<String?> get mainErrorStream => _mainError.stream;
 
   @override
   Future<void> loadData() async {
@@ -27,7 +32,9 @@ class GetxHomePresenter extends GetxController implements HomePresenter {
                 slug: hero.slug,
               ))
           .toList();
-    } on DomainError catch (error) {}
+    } on DomainError catch (error) {
+      _mainError.value = error.description;
+    }
     _isLoading.value = false;
   }
 }
