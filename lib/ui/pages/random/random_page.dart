@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dynatrace_test/ui/components/components.dart';
+import '../../mixins/mixins.dart';
 import 'package:provider/provider.dart';
 import '../../../ui/pages/random/random.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class RandomPage extends StatefulWidget {
   _RandomPageState createState() => _RandomPageState();
 }
 
-class _RandomPageState extends State<RandomPage> {
+class _RandomPageState extends State<RandomPage> with LoadingManager {
   @override
   void initState() {
     widget.presenter.loadData();
@@ -26,9 +26,7 @@ class _RandomPageState extends State<RandomPage> {
         title: const Text('Random'),
       ),
       body: Builder(builder: (context) {
-        widget.presenter.isLoadingStream.listen((isLoading) {
-          isLoading ? showLoading(context) : hideLoading(context);
-        });
+        handleLoading(context, widget.presenter.isLoadingStream);
 
         return StreamBuilder<RandomViewModel?>(
             stream: widget.presenter.heroStream,

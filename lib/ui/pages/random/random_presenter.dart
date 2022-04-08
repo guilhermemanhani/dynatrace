@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/pages/random/random.dart';
+import './random.dart';
 
 abstract class RandomPresenter implements Listenable {
   Stream<bool> get isLoadingStream;

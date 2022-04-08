@@ -1,11 +1,14 @@
 import 'package:dynatrace_test/domain/helpers/helpers.dart';
 import 'package:dynatrace_test/domain/usecases/usecases.dart';
+import '../mixins/mixins.dart';
 import 'package:get/get.dart';
 import '../../ui/pages/random/random.dart';
 
-class GetxRandomPresenter extends GetxController implements RandomPresenter {
-  final _hero = Rx<RandomViewModel?>(null);
-  final _isLoading = true.obs;
+class GetxRandomPresenter extends GetxController
+    with LoadingManager
+    implements RandomPresenter {
+  final _hero = Rxn<RandomViewModel?>(null);
+  // final _isLoading = true.obs;
   final _mainError = RxnString();
   final GetRandomHero loadHero;
 
@@ -14,30 +17,26 @@ class GetxRandomPresenter extends GetxController implements RandomPresenter {
   @override
   Stream<RandomViewModel?> get heroStream => _hero.stream;
 
-  @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
+  // @override
+  // Stream<bool> get isLoadingStream => _isLoading.stream;
 
   @override
   Future<void> loadData() async {
-    _isLoading.value = true;
+    isLoading = true;
+
     try {
-      // final hero = await loadHero.getHero();
-      // _hero.value = RandomViewModel(
-      //   id: hero.id,
-      //   name: hero.name,
-      //   slug: hero.slug,
-      //   images: hero.image,
-      // );
+      final hero = await loadHero.getHero();
       _hero.value = RandomViewModel(
-        id: 1,
-        name: 'a',
-        slug: '2',
-        images: '3',
+        id: hero.id,
+        name: hero.name,
+        slug: hero.slug,
+        images: hero.image,
       );
     } on DomainError catch (error) {
       _mainError.value = error.description;
+    } finally {
+      isLoading = false;
     }
-    _isLoading.value = false;
   }
 
   @override
