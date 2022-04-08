@@ -1,5 +1,5 @@
 import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
-import '../../../../main/factories/pages/home/home.dart';
+import 'package:dynatrace_test/main/factories/pages/page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 // As configurações de privacidade configuradas abaixo são fornecidas apenas
@@ -11,7 +11,16 @@ import 'package:get/route_manager.dart';
 void main() {
   //Dynatrace().setDataCollectionLevel(DataCollectionLevel.User);
 //Dynatrace().setCrashReportingOptedIn(true);
-  Dynatrace().start(const MyApp());
+  Dynatrace().start(
+    const MyApp(),
+    // configuration: const Configuration(
+    //   reportCrash: true,
+    //   monitorWebRequest: true,
+    //   logLevel: LogLevel.Debug,
+    //   certificateValidation: true,
+    //   userOptIn: false,
+    // ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +35,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/home',
-      getPages: [GetPage(name: '/home', page: makeHomePage)],
+      navigatorObservers: [
+        DynatraceNavigationObserver(),
+      ],
+      getPages: [
+        GetPage(name: '/home', page: makeHomePage),
+        GetPage(name: '/random', page: makeRandomPage),
+        GetPage(
+            name: '/surveys',
+            page: () =>
+                Scaffold(appBar: AppBar(), body: const Text('Surveys'))),
+      ],
     );
   }
 }

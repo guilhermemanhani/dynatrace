@@ -4,7 +4,7 @@ import '../../../domain/entities/entities.dart';
 import '../../../domain/helpers/helpers.dart';
 import '../../../domain/usecases/usecases.dart';
 
-class RemoteGetHero implements GetHero {
+class RemoteGetHero implements GetHeros {
   final HttpClient httpClient;
   final String url;
 

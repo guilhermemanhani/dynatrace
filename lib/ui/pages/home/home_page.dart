@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
@@ -26,17 +27,27 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('HOME'),
       ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.blue,
+        child: ElevatedButton(
+            onPressed: () => Get.toNamed('/random'),
+            child: const Text('Escolha aleatório')),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.next_plan_outlined),
+        onPressed: () => Get.toNamed('/surveys'),
+      ),
       body: Builder(builder: (context) {
         widget.presenter.isLoadingStream.listen((isLoading) {
           isLoading ? showLoading(context) : hideLoading(context);
         });
-        // widget.presenter.mainErrorStream.listen(
-        //   (error) {
-        //     if (error != null && error.isNotEmpty) {
-        //       showErrorMessage(context, error);
-        //     }
-        //   },
-        // );
+        widget.presenter.mainErrorStream.listen(
+          (error) {
+            if (error != null && error.isNotEmpty) {
+              showErrorMessage(context, error);
+            }
+          },
+        );
         return StreamBuilder<List<HeroViewModel>>(
             stream: widget.presenter.heroesStream,
             builder: (context, snapshot) {

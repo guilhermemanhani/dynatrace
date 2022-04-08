@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class GetxHomePresenter extends GetxController implements HomePresenter {
   final _heros = Rx<List<HeroViewModel>>([]);
   final _isLoading = true.obs;
-  final GetHero loadHero;
+  final GetHeros loadHero;
   final _mainError = RxnString();
 
   GetxHomePresenter({required this.loadHero});
