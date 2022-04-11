@@ -1,11 +1,13 @@
+import '../mixins/mixins.dart';
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 import '../../ui/pages/home/home.dart';
 import 'package:get/get.dart';
 
-class GetxHomePresenter extends GetxController implements HomePresenter {
+class GetxHomePresenter extends GetxController
+    with LoadingManager
+    implements HomePresenter {
   final _heros = Rx<List<HeroViewModel>>([]);
-  final _isLoading = true.obs;
   final GetHeros loadHero;
   final _mainError = RxnString();
 
@@ -15,15 +17,12 @@ class GetxHomePresenter extends GetxController implements HomePresenter {
   Stream<List<HeroViewModel>> get heroesStream => _heros.stream;
 
   @override
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-
-  @override
   Stream<String?> get mainErrorStream => _mainError.stream;
 
   @override
   Future<void> loadData() async {
     try {
-      _isLoading.value = true;
+      setIsLoading = true;
       final heros = await loadHero.getHero();
       _heros.value = heros
           .map((hero) => HeroViewModel(
@@ -36,6 +35,6 @@ class GetxHomePresenter extends GetxController implements HomePresenter {
     } on DomainError catch (error) {
       _mainError.value = error.description;
     }
-    _isLoading.value = false;
+    setIsLoading = false;
   }
 }

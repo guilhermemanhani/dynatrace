@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
+import 'package:dynatrace_test/ui/mixins/loading_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -15,10 +16,9 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with LoadingManager {
   @override
   void initState() {
-    widget.presenter.loadData();
     super.initState();
   }
 
@@ -52,9 +52,8 @@ class _HomePageState extends State<HomePage> {
             Get.toNamed('/dynatrace');
           }),
       body: Builder(builder: (context) {
-        widget.presenter.isLoadingStream.listen((isLoading) {
-          isLoading ? showLoading(context) : hideLoading(context);
-        });
+        handleLoading(context, widget.presenter.isLoadingStream);
+        widget.presenter.loadData();
         widget.presenter.mainErrorStream.listen(
           (error) {
             if (error != null && error.isNotEmpty) {
@@ -70,6 +69,7 @@ class _HomePageState extends State<HomePage> {
                     error: '${snapshot.error}',
                     reload: widget.presenter.loadData);
               }
+
               if (snapshot.hasData) {
                 return ListenableProvider(
                     create: (_) => widget.presenter,
@@ -148,7 +148,8 @@ class _HomePageState extends State<HomePage> {
                       },
                     ));
               }
-              return const SizedBox(height: 0);
+
+              return const SizedBox();
             });
       }),
     );

@@ -8,7 +8,6 @@ class GetxRandomPresenter extends GetxController
     with LoadingManager
     implements RandomPresenter {
   final _hero = Rxn<RandomViewModel?>(null);
-  // final _isLoading = true.obs;
   final _mainError = RxnString();
   final GetRandomHero loadHero;
 
@@ -17,12 +16,9 @@ class GetxRandomPresenter extends GetxController
   @override
   Stream<RandomViewModel?> get heroStream => _hero.stream;
 
-  // @override
-  // Stream<bool> get isLoadingStream => _isLoading.stream;
-
   @override
   Future<void> loadData() async {
-    isLoading = true;
+    setIsLoading = true;
 
     try {
       final hero = await loadHero.getHero();
@@ -35,7 +31,7 @@ class GetxRandomPresenter extends GetxController
     } on DomainError catch (error) {
       _mainError.value = error.description;
     } finally {
-      isLoading = false;
+      setIsLoading = false;
     }
   }
 

@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/random', page: makeRandomPage),
         GetPage(
             name: '/dynatrace',
-            page: () => MyHomePage(
+            page: () => const MyHomePage(
                   title: 'Dynatrace',
                 )),
       ],

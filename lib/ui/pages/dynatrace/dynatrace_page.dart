@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
 import 'package:flutter/material.dart';
 
+// ignore: constant_identifier_names
 const String HOME_NAV = 'homeNav';
+// ignore: constant_identifier_names
 const String TEST_NAV = 'testNav';
 
 // class MyApp extends StatelessWidget {
@@ -31,11 +33,14 @@ const String TEST_NAV = 'testNav';
 // }
 
 class TestNav extends StatelessWidget {
+  const TestNav({Key? key}) : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: FloatingActionButton(
-          child: Icon(Icons.navigate_before),
+          child: const Icon(Icons.navigate_before),
           onPressed: () {
             Navigator.pushNamed(context, HOME_NAV);
           },
@@ -51,7 +56,7 @@ class UndefinedView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text('No route defined here!'),
       ),
@@ -60,14 +65,15 @@ class UndefinedView extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, title}) : super(key: key);
+  const MyHomePage({Key? key, title}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var appBarText = new Text("Dynatrace Test App");
+  var appBarText = const Text("Dynatrace Test App");
+  // ignore: prefer_typing_uninitialized_variables
   static var _context;
 
   static Map<String, VoidCallback> actionsMap = {
@@ -89,9 +95,13 @@ class _MyHomePageState extends State<MyHomePage> {
     'User Privacy Options : All On': _userPrivacyOptionsAllOn,
     'getUserPrivacyOptions': () async {
       UserPrivacyOptions options = await Dynatrace().getUserPrivacyOptions();
+      // ignore: avoid_print
       print('User Privacy Options Crash:');
+      // ignore: avoid_print
       print(options.crashReportingOptedIn);
+      // ignore: avoid_print
       print('User Privacy Options Level:');
+      // ignore: avoid_print
       print(options.dataCollectionLevel);
     }
   };
@@ -120,9 +130,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 280.0,
                     height: 45.0,
                     padding: const EdgeInsets.all(8.0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
+                    child: ElevatedButton(
+                      //  Colors.white,
+
+                      // color: Colors.blue,
                       onPressed: actionsMap.values.elementAt(i),
                       child: Text(actionsMap.keys.elementAt(i)),
                     ),
@@ -161,6 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await HttpClient()
         .getUrl(Uri.parse('https://dynatrace.com'))
         .then((request) => request.close())
+        // ignore: avoid_print
         .then((response) => print("Request Done"));
     action.leaveAction();
   }
@@ -173,6 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
     request.headers.set(action.getRequestTagHeader(),
         await action.getRequestTag('https://dynatrace.com'));
     final response = await request.close();
+    // ignore: avoid_print
     print(response);
     action.leaveAction();
   }
@@ -190,6 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
     timing.startWebRequestTiming();
     final response = await request.close();
     timing.stopWebRequestTiming(response.statusCode, null);
+    // ignore: avoid_print
     print(response);
     action.leaveAction();
   }
