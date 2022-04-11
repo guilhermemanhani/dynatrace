@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
 import 'package:dynatrace_test/data/http/http.dart';
 import 'package:http/http.dart';
 
@@ -13,6 +14,8 @@ class HttpAdapter implements HttpClient {
     required String method,
     Map? body,
   }) async {
+    DynatraceRootAction action =
+        Dynatrace().enterAction("MyButton tapped - Web Action Override");
     final headers = {
       'content-type': 'application/json',
       'accept': 'application/json'
@@ -26,6 +29,7 @@ class HttpAdapter implements HttpClient {
       } else if (method == 'get') {
         response = await client.get(Uri.parse(url), headers: headers);
       }
+      action.leaveAction();
     } catch (error) {
       throw HttpError.serverError;
     }

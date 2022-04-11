@@ -1,5 +1,6 @@
 import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
 import 'package:dynatrace_test/main/factories/pages/page.dart';
+import 'package:dynatrace_test/ui/pages/dynatrace/dynatrace_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 // As configurações de privacidade configuradas abaixo são fornecidas apenas
@@ -42,9 +43,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/home', page: makeHomePage),
         GetPage(name: '/random', page: makeRandomPage),
         GetPage(
-            name: '/surveys',
-            page: () =>
-                Scaffold(appBar: AppBar(), body: const Text('Surveys'))),
+            name: '/dynatrace',
+            page: () => MyHomePage(
+                  title: 'Dynatrace',
+                )),
       ],
     );
   }

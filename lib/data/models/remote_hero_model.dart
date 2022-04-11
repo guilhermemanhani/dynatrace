@@ -28,7 +28,7 @@ class RemoteHeroModel {
   }
 
   HeroEntity toEntity() =>
-      HeroEntity(id: id, name: name, slug: slug, image: image.xs);
+      HeroEntity(id: id, name: name, slug: slug, image: image.md);
 }
 
 class Pickture {

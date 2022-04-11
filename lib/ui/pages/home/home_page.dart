@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -30,13 +31,26 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomAppBar(
         color: Colors.blue,
         child: ElevatedButton(
-            onPressed: () => Get.toNamed('/random'),
+            onPressed: () {
+              DynatraceRootAction myAction = Dynatrace()
+                  .enterAction("RandomBUTTON tapped - Single Action");
+              //Perform the action and whatever else is needed.
+
+              myAction.leaveAction();
+              Get.toNamed('/random');
+            },
             child: const Text('Escolha aleatório')),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.next_plan_outlined),
-        onPressed: () => Get.toNamed('/surveys'),
-      ),
+          child: const Icon(Icons.next_plan_outlined),
+          onPressed: () {
+            DynatraceRootAction myAction = Dynatrace()
+                .enterAction("DynatraceBUTTON tapped - Single Action");
+            //Perform the action and whatever else is needed.
+
+            myAction.leaveAction();
+            Get.toNamed('/dynatrace');
+          }),
       body: Builder(builder: (context) {
         widget.presenter.isLoadingStream.listen((isLoading) {
           isLoading ? showLoading(context) : hideLoading(context);
