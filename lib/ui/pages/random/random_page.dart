@@ -1,8 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import '../../../ui/components/components.dart';
 import '../../mixins/mixins.dart';
-import 'package:provider/provider.dart';
+
 import '../../../ui/pages/random/random.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 
 class RandomPage extends StatelessWidget with LoadingManager {
   final RandomPresenter presenter;
@@ -17,6 +19,11 @@ class RandomPage extends StatelessWidget with LoadingManager {
       body: Builder(
         builder: (context) {
           handleLoading(context, presenter.isLoadingStream);
+          presenter.mainErrorStream.listen((error) {
+            if (error != null && error.isNotEmpty) {
+              showErrorMessage(context, error);
+            }
+          });
           presenter.loadData();
 
           return StreamBuilder<RandomViewModel?>(

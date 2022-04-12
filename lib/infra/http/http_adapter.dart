@@ -14,8 +14,7 @@ class HttpAdapter implements HttpClient {
     required String method,
     Map? body,
   }) async {
-    DynatraceRootAction action =
-        Dynatrace().enterAction("MyButton tapped - Web Action Override");
+    // DynatraceRootAction action = Dynatrace().enterAction("Web Action Override");
     final headers = {
       'content-type': 'application/json',
       'accept': 'application/json'
@@ -29,7 +28,7 @@ class HttpAdapter implements HttpClient {
       } else if (method == 'get') {
         response = await client.get(Uri.parse(url), headers: headers);
       }
-      action.leaveAction();
+      // action.leaveAction();
     } catch (error) {
       throw HttpError.serverError;
     }
