@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class RandomViewModel extends Equatable {
+class RandomViewModel {
   final int id;
   final String name;
   final String slug;
@@ -14,5 +12,18 @@ class RandomViewModel extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, name, slug, images];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is RandomViewModel &&
+        other.id == id &&
+        other.name == name &&
+        other.slug == slug &&
+        other.images == images;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^ name.hashCode ^ slug.hashCode ^ images.hashCode;
+  }
 }

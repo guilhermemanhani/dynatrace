@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dynatrace_flutter_plugin/dynatrace_flutter_plugin.dart';
 import 'package:dynatrace_test/data/http/http.dart';
 import 'package:http/http.dart';
 

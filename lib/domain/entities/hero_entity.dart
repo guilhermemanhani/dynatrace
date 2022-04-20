@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class HeroEntity extends Equatable {
+class HeroEntity {
   final int id;
   final String name;
   final String slug;
@@ -13,5 +11,18 @@ class HeroEntity extends Equatable {
       required this.image});
 
   @override
-  List<Object?> get props => [id, name, slug, image];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is HeroEntity &&
+        other.id == id &&
+        other.name == name &&
+        other.slug == slug &&
+        other.image == image;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^ name.hashCode ^ slug.hashCode ^ image.hashCode;
+  }
 }
